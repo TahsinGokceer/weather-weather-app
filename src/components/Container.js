@@ -3,7 +3,7 @@ import { useCities } from '../context/CitiesContext'
 import axios from 'axios'
 import './style.css'
 
-const apikey = "3265874a2c77ae4a04bb96236a642d2f";
+const apikey = "bd5e378503939ddaee76f12ad7a97608";
 const baseUrl = "https://api.openweathermap.org/data/2.5/forecast"
 const iconUrl = "https://openweathermap.org/img/wn/"
 
@@ -12,21 +12,20 @@ function Container() {
     const [city, setCity] = useState("")
     const [weatherData, setWeatherData] = useState([])
     const currentDays = findDays()
-    console.log(currentDays);
     
     const onChange = (e) => {
         setCity(e.target.value)      
     }
 
-    useEffect(() => {
+    useEffect(() => {        
         if(city !== ""){
             axios(`${baseUrl}/daily?q=${city}&appid=${apikey}&lang=TR`).then(res => setWeatherData(res.data.list))
         }
     }, [city])
 
-    useEffect(() => {
-        console.log(weatherData);
-    }, [weatherData])
+    // useEffect(() => {
+    //     console.log(weatherData);
+    // }, [weatherData])
     
     return (
         <div className='container'>
@@ -50,7 +49,7 @@ function Container() {
                         weatherData.map((day, i) => 
                             <div key={i} className='card'>
                                 <h3 className='day'>{currentDays[i]}</h3>
-                                <img src={`${iconUrl}${day.weather[0].icon}@2x.png`}/>
+                                <img src={`${iconUrl}${day.weather[0].icon}@2x.png`} alt=''/>
                                 <div className="content">
                                     <h4>{day.weather[0].description}</h4>
                                     <h3>{Math.floor(day.temp.day - 273.15)}°C</h3>
